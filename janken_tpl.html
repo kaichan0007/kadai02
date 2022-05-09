@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<script src="js/jquery-2.1.3.min.js"></script>
+<link rel="stylesheet" href="css/sample.css">
+<title>じゃんけん</title>
+</head>
+<body>
+
+<header>
+  <h1>じゃんけん</h1>
+</header>
+
+<main>
+  <h1>
+    コンピューターの手
+  </h1>
+  <div class="img_container">
+    <img id=hands src="img/Goo.png">
+  </div>
+  <h1>
+    あなたの手
+  </h1>
+  <ul>
+    <li id="gu_btn">グー</li>
+    <li id="cho_btn">チョキ</li>
+    <li id="par_btn">パー</li>
+  </ul>
+  <div id="judgement">あなたの勝ち</div>
+</main>
+
+<footer></footer>
+<script>
+//じゃんけん用のSCRIPTを書いてください
+
+let aa = new Array("img/Goo.png", "img/Choki.png", "img/Paa.png");
+//グーは0、チョキは1、パーは2
+let timer1 = null;
+let count = 0;
+let img_count = 0;
+let janken = 0;
+
+function change_img(){
+  $("#hands").attr("src", aa[img_count]);
+  console.log(img_count);
+  if(img_count >= 2){
+    img_count=0;
+  }else{
+    img_count++;
+  }
+  count++;
+  if (count >= 30 && timer1 != null) {
+    count = 0;
+    console.log(janken);
+    clearInterval(timer1);
+  }
+}
+
+function gu_janken(){
+  janken = Math.floor(Math.random()*3);
+  $("#hands").attr("src", aa[janken]);
+  if(janken==0){
+    $("#judgement").html("引き分け");
+  }
+  else if(janken==1){
+    $("#judgement").html("あなたの勝ち");
+  }
+  else{
+    $("#judgement").html("あなたの負け");
+  }
+}
+
+function choki_janken(){
+  janken = Math.floor(Math.random()*3);
+  $("#hands").attr("src", aa[janken]);
+  if(janken==1){
+    $("#judgement").html("引き分け");
+  }
+  else if(janken==2){
+    $("#judgement").html("あなたの勝ち");
+  }
+  else{
+    $("#judgement").html("あなたの負け");
+  }
+}
+
+function paa_janken(){
+  janken = Math.floor(Math.random()*3);
+  $("#hands").attr("src", aa[janken]);
+  if(janken==2){
+    $("#judgement").html("引き分け");
+  }
+  else if(janken==0){
+    $("#judgement").html("あなたの勝ち");
+  }
+  else{
+    $("#judgement").html("あなたの負け");
+  }
+}
+
+function gu_action(){
+  timer1 = setInterval(change_img, 10);
+  setTimeout(gu_janken, 300);
+}
+function choki_action(){
+  timer1 = setInterval(change_img, 10);
+  setTimeout(choki_janken, 300);
+}
+function paa_action(){
+  timer1 = setInterval(change_img, 10);
+  setTimeout(paa_janken, 300);
+}
+
+$("#gu_btn").on("click", gu_action);
+$("#cho_btn").on("click", choki_action);
+$("#par_btn").on("click", paa_action);
+
+</script>
+</body>
+</html>
